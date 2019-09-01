@@ -56,7 +56,6 @@ export default async function(container) {
   editor.addNode(n5);
   editor.addNode(n6);
   editor.addNode(n7);
-  // console.log(editor.nodes[0].update())
 
   editor.on(
     "process nodecreated noderemoved connectioncreated connectionremoved",

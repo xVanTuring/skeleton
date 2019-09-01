@@ -14,7 +14,11 @@
           @pointerdown.stop
           @pointermove.stop
         >
-        <div class="input-title">
+        <div
+          class="input-title"
+          @dblclick.stop
+          @pointerdown.stop="titleDown(index,$event)"
+        >
           {{ labels[index] }}
         </div>
       </div>
@@ -33,7 +37,8 @@ export default {
   },
   data: function() {
     return {
-      value: []
+      value: [],
+      drag: { currentIdx: -1, downValue: -1, initVal: 0 }
     };
   },
   mounted() {
@@ -42,14 +47,24 @@ export default {
       this.putData(label.toLowerCase(), defaultVal);
       return defaultVal;
     });
+    document.addEventListener("pointermove", this.pointerMove);
+    document.addEventListener("pointerup", this.pointerUp);
   },
   methods: {
+    checkValue(idx, value) {
+      let min = this.configGroup[idx].min;
+      let max = this.configGroup[idx].max;
+      return Math.min(Math.max(value, min), max);
+    },
     inputUpdate(index, event) {
-      let min = this.configGroup[index].min;
-      let max = this.configGroup[index].max;
-
+      let targetValue;
+      if (typeof event === "number") {
+        targetValue = event;
+      } else {
+        targetValue = +event.target.value;
+      }
       let cloned = this.value.slice();
-      cloned[index] = Math.min(Math.max(+event.target.value, min), max);
+      cloned[index] = +this.checkValue(index, targetValue).toFixed(2);
       this.value = cloned;
       this.update();
     },
@@ -58,6 +73,25 @@ export default {
         this.putData(label.toLowerCase(), this.value[index]);
       });
       this.emitter.trigger("process");
+    },
+    titleDown(index, event) {
+      this.drag.currentIdx = index;
+      this.drag.downValue = event.clientX;
+      this.drag.initVal = this.value[index];
+    },
+    pointerMove(event) {
+      if (this.drag.currentIdx !== -1) {
+        let delta = event.clientX - this.drag.downValue;
+        // let result = this.checkValue(
+        //   this.drag.currentIdx,
+        //   this.drag.initVal + delta
+        // );
+        this.inputUpdate(this.drag.currentIdx, this.drag.initVal + delta * 0.1);
+        // console.log(result)
+      }
+    },
+    pointerUp() {
+      this.drag.currentIdx = -1;
     }
   }
 };
@@ -69,7 +103,9 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   max-width: 200px;
+  user-select: none;
   .table-input {
+    margin-bottom: 8px;
     input {
       color: white;
       font-size: 18px;
@@ -84,6 +120,8 @@ export default {
       color: white;
       text-align: center;
       margin-top: 2px;
+      cursor: ew-resize;
+      // background-color: blue;
     }
   }
 }

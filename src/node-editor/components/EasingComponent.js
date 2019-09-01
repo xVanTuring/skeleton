@@ -5,7 +5,6 @@ import { SelectionControl } from "../controls/SelectionControl";
 import { EasingPreviewControl } from "../controls/EasingPreviewControl";
 import { EasingConfig, getEasingPath } from "../../utils/EasingHelp";
 // TODO: add custom easing
-// Table Input
 // draggable Input Title
 export class EasingComponent extends Rete.Component {
   constructor() {

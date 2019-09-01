@@ -2,7 +2,6 @@ import Rete from "rete";
 import Node from "../custom/Node.vue";
 import { easeSocket } from "../sockets";
 import { SpringPreviewControl } from "../controls/SpringPreviewControl";
-// import { NumControl } from "../controls/NumberControl";
 import { TableInputControl } from "../controls/TableInputControl";
 
 export class SpringComponent extends Rete.Component {
@@ -16,7 +15,7 @@ export class SpringComponent extends Rete.Component {
   builder(node) {
     let output = new Rete.Output("easeOutput", "Ease", easeSocket);
     node.addOutput(output);
-    this.tableInput = new TableInputControl(
+    let tableInput = new TableInputControl(
       this.editor,
       "params",
       ["Mass", "Stiffness", "Damping", "Velocity"],
@@ -28,7 +27,7 @@ export class SpringComponent extends Rete.Component {
       ]
     );
 
-    node.addControl(this.tableInput);
+    node.addControl(tableInput);
     this.springComp = new SpringPreviewControl(this.editor, "spring");
     node.addControl(this.springComp);
     return node;

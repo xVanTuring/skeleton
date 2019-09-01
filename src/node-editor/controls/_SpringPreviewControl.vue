@@ -50,7 +50,7 @@ export default {
       } else {
         this.path.segments = points;
       }
-      this.path.simplify();
+      // this.path.simplify();
     }
   }
 };

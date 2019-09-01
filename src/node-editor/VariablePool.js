@@ -9,7 +9,3 @@ export const mutations = {
     store.variablePool = pool;
   }
 };
-
-setTimeout(() => {
-  mutations.setVariablePool(["Var2", "Var3", "Var4"]);
-}, 3000);
