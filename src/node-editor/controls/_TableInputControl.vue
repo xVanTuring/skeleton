@@ -1,17 +1,21 @@
 <template>
   <div class="table-input-control">
     <div
-      v-for="(group,index) in labels"
-      :key="index"
+      v-for="(val,index) in value"
+      :key="labels[index]"
       class="table-input"
     >
-      <div
-        v-for="item in group"
-        :key="item"
-      >
-        <input type="number">
+      <div class="input-wrapper">
+        <input
+          :value="val"
+          type="number"
+          @change="inputUpdate(index,$event)"
+          @dblclick.stop
+          @pointerdown.stop
+          @pointermove.stop
+        >
         <div class="input-title">
-          {{ item }}
+          {{ labels[index] }}
         </div>
       </div>
     </div>
@@ -20,21 +24,52 @@
 
 <script>
 export default {
+  props: {
+    labels: Array,
+    getData: Function,
+    putData: Function,
+    emitter: Object,
+    configGroup: Array
+  },
   data: function() {
     return {
-      labels: [["Mass", "Stiffness"], ["Dumping", "Velocity"]]
+      value: []
     };
+  },
+  mounted() {
+    this.value = this.labels.map((label, index) => {
+      let defaultVal = this.getData(label) || this.configGroup[index].default;
+      this.putData(label.toLowerCase(), defaultVal);
+      return defaultVal;
+    });
+  },
+  methods: {
+    inputUpdate(index, event) {
+      let min = this.configGroup[index].min;
+      let max = this.configGroup[index].max;
+
+      let cloned = this.value.slice();
+      cloned[index] = Math.min(Math.max(+event.target.value, min), max);
+      this.value = cloned;
+      this.update();
+    },
+    update() {
+      this.labels.forEach((label, index) => {
+        this.putData(label.toLowerCase(), this.value[index]);
+      });
+      this.emitter.trigger("process");
+    }
   }
 };
 </script>
 
 <style lang="scss">
 .table-input-control {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 200px;
   .table-input {
-    min-width: 180px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
     input {
       color: white;
       font-size: 18px;
