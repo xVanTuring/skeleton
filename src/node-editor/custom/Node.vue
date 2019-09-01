@@ -88,7 +88,7 @@ $socket-margin: 10px;
   box-shadow: 1px solid black;
   border: 1px solid black;
   border-radius: 10px;
-  cursor: pointer;
+  // cursor: pointer;
   display: inline-block;
   height: auto;
   padding-bottom: 6px;
@@ -102,6 +102,7 @@ $socket-margin: 10px;
     border: 1px solid #ffd252;
   }
   .title {
+    user-select: none;
     border-top: 1px solid #ccc;
     color: white;
     text-align: center;
@@ -142,6 +143,7 @@ $socket-margin: 10px;
   }
   .input-title,
   .output-title {
+    user-select: none;
     vertical-align: middle;
     color: white;
     display: inline-block;
