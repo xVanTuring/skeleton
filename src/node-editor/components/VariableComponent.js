@@ -1,5 +1,5 @@
 import Rete from "rete";
-import { numSocket } from "../sockets";
+import { variableSocket } from "../sockets";
 import Node from "../custom/Node.vue";
 import { SelectionControl } from "../controls/SelectionControl";
 export class VariableComponent extends Rete.Component {
@@ -21,7 +21,7 @@ export class VariableComponent extends Rete.Component {
       true
     );
     node.addControl(this.varSelection);
-    node.addOutput(new Rete.Output("numOutput", "Output", numSocket));
+    node.addOutput(new Rete.Output("numOutput", "Output", variableSocket));
     return node;
   }
 

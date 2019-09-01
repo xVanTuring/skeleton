@@ -58,6 +58,8 @@ export default {
 <style lang="scss" scoped>
 .selection-control {
   display: flex;
+  user-select: none;
+  min-width: 160px;
   justify-content: space-between;
   select {
     width: 100px;

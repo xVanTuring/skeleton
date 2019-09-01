@@ -6,10 +6,25 @@
     <div class="title">
       {{ node.name }}
     </div>
+
     <div class="content">
       <div
+        v-for="output in outputs()"
+        :key="output.key"
+        class="outputs"
+      >
+        <div class="output-title">
+          {{ output.name }}
+        </div>
+        <Socket
+          v-socket:output="output"
+          type="output"
+          :socket="output.socket"
+          :used="output.connections.length > 0"
+        />
+      </div>
+      <div
         v-if="node.controls.size > 0 || node.inputs.size > 0"
-        class="column"
       >
         <div
           v-for="(control,index) in controls()"
@@ -42,23 +57,7 @@
           />
         </div>
       </div>
-      <div class="column">
-        <div
-          v-for="output in outputs()"
-          :key="output.key"
-          class="outputs"
-        >
-          <div class="output-title">
-            {{ output.name }}
-          </div>
-          <Socket
-            v-socket:output="output"
-            type="output"
-            :socket="output.socket"
-            :used="output.connections.length > 0"
-          />
-        </div>
-      </div>
+      <div />
     </div>
   </div>
 </template>
@@ -68,12 +67,15 @@ import VueRender from "rete-vue-render-plugin";
 import Socket from "./Socket.vue";
 export default {
   components: { Socket },
-  mixins: [VueRender.mixin]
+  mixins: [VueRender.mixin],
+  mounted() {
+    console.log(this.node);
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-$node-color: rgba(35, 35, 35, 0.7);
+$node-color: #202020bd; //rgba(35, 35, 35, 0.7);
 $color-active: darken($node-color, 5%);
 $title-light: rgba(0, 255, 0, 0.5);
 $title-light-transparent: rgba(0, 255, 0, 0);
@@ -84,22 +86,30 @@ $context-menu-round: 7px;
 $socket-size: 16px;
 $socket-margin: 10px;
 .node {
+  position: relative;
+  min-width: 260px;
   background: $node-color;
   box-shadow: 1px solid black;
-  border: 1px solid black;
+  // border: 1px solid black;
   border-radius: 10px;
-  // cursor: pointer;
   display: inline-block;
   height: auto;
   padding-bottom: 6px;
   box-sizing: content-box;
   box-shadow: 4px 5px 9px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+
   &:hover {
     background: $node-color;
   }
   &.active {
     background: $color-active;
     border: 1px solid #ffd252;
+  }
+  &.selected {
+    .title {
+      background-color: #139fdb;
+    }
   }
   .title {
     user-select: none;
@@ -112,28 +122,12 @@ $socket-margin: 10px;
     border-radius: 10px 10px 0 0;
     padding: 8px;
     overflow: hidden;
-    background: linear-gradient(
-        to top,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(255, 255, 255, 0.05) 40%,
-        rgba(255, 255, 255, 0.19) 100%
-      ),
-      radial-gradient(
-        70% 40px at center,
-        $title-light 0%,
-        $title-light-transparent 60%
-      );
+    background-color: rgb(61, 61, 61);
   }
   .content {
-    display: table;
+    // display: table;
     width: 100%;
-    .column {
-      display: table-cell;
-      white-space: nowrap;
-      &:not(:last-child) {
-        padding-right: 20px;
-      }
-    }
+    padding-right: 10px;
   }
   .inputs {
     text-align: left;
@@ -160,6 +154,7 @@ $socket-margin: 10px;
   .control {
     width: 100%;
     padding: $socket-margin $socket-size/2 + $socket-margin;
+    padding-right: 28px;
   }
 }
 </style>

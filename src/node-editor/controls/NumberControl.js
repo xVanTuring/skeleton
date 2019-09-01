@@ -7,11 +7,12 @@ export class NumControl extends Rete.Control {
     title = "Value",
     min = 0,
     max = 1000,
-    defaultVal = 1
+    defaultVal = 1,
+    asInt = false
   ) {
     super(key);
     this.component = VueNumberControl;
-    this.props = { emitter, ikey: key, title, min, max, defaultVal };
+    this.props = { emitter, ikey: key, title, min, max, defaultVal, asInt };
   }
 
   setValue(val) {

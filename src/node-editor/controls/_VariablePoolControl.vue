@@ -19,11 +19,12 @@
 <script>
 import { store } from "../VariablePool";
 export default {
-  props: ["emitter", "ikey", "getData", "putData", "title"],
+  props: ["emitter", "ikey", "getData", "putData"],
   data: () => {
     return {
       selected: "",
-      store: store
+      store: store,
+      title: "Variable"
     };
   },
   computed: {
@@ -64,5 +65,6 @@ export default {
   select {
     width: 100px;
   }
+  max-width: 160px;
 }
 </style>

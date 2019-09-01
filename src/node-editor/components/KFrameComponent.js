@@ -18,7 +18,7 @@ export class KFrameComponent extends Rete.Component {
     let value = new Rete.Input("value", "Value", numSocket);
     let ease = new Rete.Input("ease", "Ease", easeSocket);
     offset.addControl(
-      new NumControl(this.editor, "offset", "Offset", 0, 9999, 0)
+      new NumControl(this.editor, "offset", "Offset", 0, 9999, 0, true)
     );
     value.addControl(
       new NumControl(this.editor, "value", "Value", -9999, 9999, 1)

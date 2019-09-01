@@ -78,20 +78,17 @@ export default {
       this.drag.currentIdx = index;
       this.drag.downValue = event.clientX;
       this.drag.initVal = this.value[index];
+      document.body.style.cursor = "ew-resize";
     },
     pointerMove(event) {
       if (this.drag.currentIdx !== -1) {
         let delta = event.clientX - this.drag.downValue;
-        // let result = this.checkValue(
-        //   this.drag.currentIdx,
-        //   this.drag.initVal + delta
-        // );
         this.inputUpdate(this.drag.currentIdx, this.drag.initVal + delta * 0.1);
-        // console.log(result)
       }
     },
     pointerUp() {
       this.drag.currentIdx = -1;
+      document.body.style.cursor = "";
     }
   }
 };
@@ -116,12 +113,15 @@ export default {
       border-radius: 4px;
       padding-left: 8px;
     }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
     .input-title {
       color: white;
       text-align: center;
       margin-top: 2px;
       cursor: ew-resize;
-      // background-color: blue;
     }
   }
 }
