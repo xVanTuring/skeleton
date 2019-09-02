@@ -68,9 +68,6 @@ import Socket from "./Socket.vue";
 export default {
   components: { Socket },
   mixins: [VueRender.mixin],
-  mounted() {
-    console.log(this.node);
-  }
 };
 </script>
 

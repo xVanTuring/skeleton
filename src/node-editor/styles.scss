@@ -1,3 +1,4 @@
+@import "./colors.scss";
 $grid-size: 170px;
 $grid-color: #363636;
 $dark-color: darken($grid-color, 10%);
@@ -42,4 +43,28 @@ $th: 0.008;
   &.active {
     stroke: #aaa;
   }
+}
+.connection.socket-input-property.socket-output-property path {
+  stroke: $socker-property-color;
+}
+.connection.socket-input-number.socket-output-number path {
+  stroke: $socker-number-color;
+}
+.connection.socket-input-ref.socket-output-ref path {
+  stroke: $socker-ref-color;
+}
+.connection.socket-input-variable.socket-output-variable path {
+  stroke: $socker-variable-color;
+}
+.connection.socket-input-keyframe.socket-output-keyframe path {
+  stroke: $socker-keyframe-color;
+}
+.connection.socket-input-bool.socket-output-bool path {
+  stroke: $socker-bool-color;
+}
+.connection.socket-input-ease.socket-output-ease path {
+  stroke: $socker-ease-color;
+}
+.connection .main-path{
+  stroke: rgba(255, 255, 255, 0.7);
 }

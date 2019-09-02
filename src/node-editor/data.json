@@ -1,30 +1,13 @@
 {
   "id": "skeleton@0.1.0",
   "nodes": {
-    "2": {
-      "id": 2,
-      "data": { "num": 0 },
-      "inputs": {},
-      "outputs": { "numOutput": { "connections": [] } },
-      "position": [-89.06069917850998, 80.89626315563234],
-      "name": "CONST"
-    },
-    "3": {
-      "id": 3,
-      "data": { "operator": 0, "input1": 1, "input2": 1 },
-      "inputs": {
-        "input1": { "connections": [] },
-        "input2": { "connections": [] }
-      },
-      "outputs": { "compareOutput": { "connections": [] } },
-      "position": [300, 200],
-      "name": "COMPARE"
-    },
     "4": {
       "id": 4,
-      "data": { "ease": "easeOutCubic", "offset": 0, "value": 1 },
+      "data": { "ease": "easeInOutQuad", "offset": 300, "value": 150 },
       "inputs": {
-        "ease": { "connections": [] },
+        "ease": {
+          "connections": [{ "node": 5, "output": "easeOutput", "data": {} }]
+        },
         "offset": { "connections": [] },
         "value": { "connections": [] }
       },
@@ -33,14 +16,18 @@
           "connections": [{ "node": 12, "input": "keyFrames", "data": {} }]
         }
       },
-      "position": [-75.75349751080594, 277.8192299989299],
+      "position": [-57.22619704481434, 379.2500006667128],
       "name": "KEYFRAME"
     },
     "5": {
       "id": 5,
       "data": { "curve": "ease", "mode": "default" },
       "inputs": {},
-      "outputs": { "easeOutput": { "connections": [] } },
+      "outputs": {
+        "easeOutput": {
+          "connections": [{ "node": 4, "input": "ease", "data": {} }]
+        }
+      },
       "position": [-507.89748852560905, -6.214153350615305],
       "name": "EASING"
     },
@@ -49,31 +36,34 @@
       "data": { "mass": 1, "stiffness": 100, "damping": 10, "velocity": 1 },
       "inputs": {},
       "outputs": { "easeOutput": { "connections": [] } },
-      "position": [-518.7314033579185, 387.7351074238389],
+      "position": [-802.6383301239653, -10.84269375370377],
       "name": "SPRING"
     },
     "7": {
       "id": 7,
-      "data": { "variable": "Var1" },
+      "data": { "variable": "Var2" },
       "inputs": {},
       "outputs": { "numOutput": { "connections": [] } },
-      "position": [-37.79622106311795, 537.376323126181],
+      "position": [-62.13902093023459, 1062.960479279661],
       "name": "Variable"
     },
     "8": {
       "id": 8,
       "data": { "value": 0 },
       "inputs": {
+        "prev": {
+          "connections": [{ "node": 14, "output": "complete", "data": {} }]
+        },
         "variable": { "connections": [] },
         "value": { "connections": [] }
       },
       "outputs": { "numOutput": { "connections": [] } },
-      "position": [381.39294756253446, 489.9120369636942],
+      "position": [1053.8000363154113, 379.08282592441645],
       "name": "SET"
     },
     "10": {
       "id": 10,
-      "data": { "ease": "easeInQuad", "offset": 0, "value": 1 },
+      "data": { "ease": "easeInQuad", "offset": 0, "value": 70 },
       "inputs": {
         "ease": { "connections": [] },
         "offset": { "connections": [] },
@@ -84,28 +74,22 @@
           "connections": [{ "node": 12, "input": "keyFrames", "data": {} }]
         }
       },
-      "position": [-86.12482450079959, 754.4245404324379],
+      "position": [-74.72553542392404, 640.2814849711749],
       "name": "KEYFRAME"
     },
     "11": {
       "id": 11,
       "data": { "property": "width" },
       "inputs": {},
-      "outputs": {
-        "property": {
-          "connections": [{ "node": 12, "input": "property", "data": {} }]
-        }
-      },
-      "position": [-85.61247227413544, 629.109252465599],
+      "outputs": { "property": { "connections": [] } },
+      "position": [-65.9045971445464, 1221.8091426732908],
       "name": "Property Selection"
     },
     "12": {
       "id": 12,
-      "data": { "property": "width" },
+      "data": { "property": "height" },
       "inputs": {
-        "property": {
-          "connections": [{ "node": 11, "output": "property", "data": {} }]
-        },
+        "property": { "connections": [] },
         "keyFrames": {
           "connections": [
             { "node": 4, "output": "KFrame", "data": {} },
@@ -113,17 +97,75 @@
           ]
         }
       },
-      "outputs": { "transition": { "connections": [] } },
-      "position": [279.00507339119525, 699.6611477255838],
+      "outputs": {
+        "transition": {
+          "connections": [{ "node": 14, "input": "transition", "data": {} }]
+        }
+      },
+      "position": [279.75791153376184, 455.8040405382332],
       "name": "Transition"
     },
     "13": {
       "id": 13,
-      "data": {},
+      "data": { "ref": "Rref" },
       "inputs": {},
-      "outputs": { "numOutput": { "connections": [] } },
-      "position": [-58.90912116096712, -33.8365251508265],
+      "outputs": {
+        "ref": { "connections": [{ "node": 16, "input": "ref", "data": {} }] }
+      },
+      "position": [-86.97075293150922, -57.831579378960186],
       "name": "Ref"
+    },
+    "14": {
+      "id": 14,
+      "data": {},
+      "inputs": {
+        "prev": {
+          "connections": [{ "node": 16, "output": "numOutput", "data": {} }]
+        },
+        "transition": {
+          "connections": [
+            { "node": 12, "output": "transition", "data": {} },
+            { "node": 15, "output": "transition", "data": {} }
+          ]
+        }
+      },
+      "outputs": {
+        "next": { "connections": [] },
+        "complete": {
+          "connections": [{ "node": 8, "input": "prev", "data": {} }]
+        }
+      },
+      "position": [686.2056752604959, 381.1428500317802],
+      "name": "Start Animation"
+    },
+    "15": {
+      "id": 15,
+      "data": { "property": "height" },
+      "inputs": {
+        "property": { "connections": [] },
+        "keyFrames": { "connections": [] }
+      },
+      "outputs": {
+        "transition": {
+          "connections": [{ "node": 14, "input": "transition", "data": {} }]
+        }
+      },
+      "position": [285.1836834471638, 892.926190849153],
+      "name": "Transition"
+    },
+    "16": {
+      "id": 16,
+      "data": { "ref": "Ref2" },
+      "inputs": {
+        "ref": { "connections": [{ "node": 13, "output": "ref", "data": {} }] }
+      },
+      "outputs": {
+        "numOutput": {
+          "connections": [{ "node": 14, "input": "prev", "data": {} }]
+        }
+      },
+      "position": [289.62695415680344, -29.156736576660673],
+      "name": "On Tap"
     }
   }
 }

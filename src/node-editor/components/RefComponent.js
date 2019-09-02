@@ -12,7 +12,7 @@ export class RefComponent extends Rete.Component {
   }
 
   builder(node) {
-    var out1 = new Rete.Output("numOutput", "Output", refSocket);
+    var out1 = new Rete.Output("ref", "Ref", refSocket);
     node.addControl(
       new SelectionControl(this.editor, "ref", "Ref", ["Rref", "Ref2"], "Rref")
     );
@@ -20,6 +20,5 @@ export class RefComponent extends Rete.Component {
   }
 
   worker() {
-    // outputs["numOutput"] = node.data.num;
   }
 }

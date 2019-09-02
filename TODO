@@ -1,0 +1,6 @@
+* Restore Node layout
+* remove right click 
+* left click to drag select
+    "typescript": "^3.6.2",
+        "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",

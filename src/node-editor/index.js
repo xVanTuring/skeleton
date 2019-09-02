@@ -15,6 +15,8 @@ import data from "./data.json";
 import { TransitionComponent } from "./components/transition/TransitionComponent";
 import { PropertySelectionComponent } from "./components/transition/PropertySelectionComponent";
 import { RefComponent } from "./components/RefComponent";
+import { StartAnimationComponent } from "./components/transition/StartAnimationComponent";
+import { OnTapComponent } from "./components/event/OnTapComponent";
 export default async function(container) {
   container.classList.add("custom-node-editor");
   const background = document.createElement("div");
@@ -29,14 +31,20 @@ export default async function(container) {
     new SetVariableComponent(),
     new TransitionComponent(),
     new PropertySelectionComponent(),
-    new RefComponent()
+    new RefComponent(),
+    new StartAnimationComponent(),
+    new OnTapComponent()
   ];
   let editor = new Rete.NodeEditor("skeleton@0.1.0", container);
 
   editor.use(ConnectionPlugin);
   editor.use(VueRenderPlugin);
-  editor.use(ContextMenuPlugin);
-  editor.use(AreaPlugin, { background });
+  // editor.use(ContextMenuPlugin);
+  editor.use(AreaPlugin, {
+    background,
+    scaleExtent: { min: 0.4, max: 1 }
+    // snap: { size: 64, dynamic: true }
+  });
 
   let engine = new Rete.Engine("skeleton@0.1.0");
   components.forEach(c => {
@@ -45,6 +53,11 @@ export default async function(container) {
   });
 
   editor.fromJSON(data).then(() => {
+    editor.on(
+      "multiselectnode",
+      args => (args.accumulate = args.e.ctrlKey || args.e.metaKey)
+    );
+
     editor.on(
       "process nodecreated noderemoved connectioncreated connectionremoved",
       async () => {
@@ -55,7 +68,7 @@ export default async function(container) {
       }
     );
     editor.trigger("process");
-    editor.view.resize();
-    AreaPlugin.zoomAt(editor);
+    // editor.view.resize();
+    // AreaPlugin.zoomAt(editor);
   });
 }
